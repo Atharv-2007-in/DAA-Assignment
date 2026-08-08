@@ -1,0 +1,28 @@
+class Solution {
+    public int maxSubArray(int[] nums) {
+        return merge(nums, 0, nums.length - 1);
+    }
+    public int merge(int[] nums, int left, int right) {
+
+        if (left == right) {
+            return nums[left];
+        }
+        int mid = left + (right - left) / 2;
+        int a = merge(nums, left, mid);
+        int b = merge(nums, mid + 1, right);
+        int x = Integer.MIN_VALUE;
+        int sum = 0;
+        for (int i = mid; i >= left; i--) {
+            sum += nums[i];
+            x = Math.max(x, sum);
+        }
+        int y = Integer.MIN_VALUE;
+        sum = 0;
+        for (int i = mid + 1; i <= right; i++) {
+            sum += nums[i];
+            y = Math.max(y, sum);
+        }
+        int z = x + y;
+        return Math.max(a, Math.max(b, z));
+    }
+}
